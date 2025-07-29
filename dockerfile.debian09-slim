@@ -11,11 +11,12 @@ FROM debian:stretch-slim
 
 COPY --from=build /app/freexian-archive-keyring_2022.06.08_all.deb /tmp/
 
-RUN dpkg -i /tmp/freexian-archive-keyring_2022.06.08_all.deb \
-    && rm -f /tmp/freexian-archive-keyring_2022.06.08_all.deb \
-    && echo "deb http://deb.freexian.com/extended-lts stretch main contrib non-free" > /etc/apt/sources.list.d/extended-lts.list \
-    && apt-get update \
-    && apt-get -y upgrade
+RUN dpkg -i /tmp/freexian-archive-keyring_2022.06.08_all.deb; \
+    rm -f /tmp/freexian-archive-keyring_2022.06.08_all.deb; \
+    rm -f /etc/apt/sources.list; \
+    echo "deb http://deb.freexian.com/extended-lts stretch main contrib non-free" > /etc/apt/sources.list.d/extended-lts.list; \
+    apt-get update; \
+    apt-get -y upgrade
 
 WORKDIR /
 
