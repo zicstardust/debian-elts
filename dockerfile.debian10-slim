@@ -1,0 +1,22 @@
+FROM debian:stable AS build
+
+WORKDIR /app
+
+RUN apt update && apt install -y wget
+
+RUN wget https://deb.freexian.com/extended-lts/pool/main/f/freexian-archive-keyring/freexian-archive-keyring_2022.06.08_all.deb
+
+FROM debian:buster-slim
+
+
+COPY --from=build /app/freexian-archive-keyring_2022.06.08_all.deb /tmp/
+
+RUN dpkg -i /tmp/freexian-archive-keyring_2022.06.08_all.deb \
+    && rm -f /tmp/freexian-archive-keyring_2022.06.08_all.deb \
+    && echo "deb http://deb.freexian.com/extended-lts buster main contrib non-free" > /etc/apt/sources.list.d/extended-lts.list \
+    && apt-get update \
+    && apt-get -y upgrade
+
+WORKDIR /
+
+CMD [ "bash" ]
