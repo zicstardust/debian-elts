@@ -22,7 +22,7 @@
 
 
 ## Usage
-Image base to old containers and softwares
+Base image for old software and containers
 
 ## More infos
 [Debian Wiki](https://wiki.debian.org/LTS/Extended)
